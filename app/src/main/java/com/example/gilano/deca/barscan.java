@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 public class barscan extends AppCompatActivity {
 
+    //Second Commit
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
