@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:text="Scan In/Out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scan"
+        android:onClick="scan"/>
+
+    <Button android:id="@+id/allstudents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Students"
+        android:onClick="seeAll"/>
+
+    <Button android:id="@+id/chkedIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Checked In"
+        android:onClick="seeIn"/>
+
+    <Button android:id="@+id/chkedOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Checked Out"
+        android:onClick="seeOut"/>
+
+
+</LinearLayout>
