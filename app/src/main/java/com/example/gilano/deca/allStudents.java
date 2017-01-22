@@ -24,6 +24,7 @@ public class allStudents extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_students);
+
         mBackbtn = (Button) findViewById(R.id.backButton);
         mBackbtn.setOnClickListener(new View.OnClickListener() {
             @Override
