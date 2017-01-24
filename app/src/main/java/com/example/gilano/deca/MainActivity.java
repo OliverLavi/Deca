@@ -32,4 +32,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, allOut.class);
         startActivity(intent);
     }
+
+    public void addStudent(View view) {
+        Intent intent = new Intent(this, addStudent.class);
+        startActivity(intent);
+    }
 }

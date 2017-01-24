@@ -28,16 +28,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="ID" />
-    <EditText
-        android:id="@+id/fNameIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="First Name" />
-    <EditText
-        android:id="@+id/lNameIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Last Name" />
+    <!--<EditText-->
+        <!--android:id="@+id/fNameIn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="First Name" />-->
+    <!--<EditText-->
+        <!--android:id="@+id/lNameIn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Last Name" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,13 +48,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Check In"/>
+            android:text="Check In"
+            android:onClick="checkIn"/>
         <Button
             android:id="@+id/chkOutBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Check Out"/>
+            android:text="Check Out"
+            android:onClick="checkOut"/>
     </LinearLayout>
 
     <TextView

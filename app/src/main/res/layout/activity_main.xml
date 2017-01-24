@@ -7,6 +7,12 @@
     android:orientation="vertical">
 
     <Button
+        android:text="Add Student to List"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addStudent"
+        android:onClick="addStudent"/>
+    <Button
         android:text="Scan In/Out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
