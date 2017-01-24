@@ -46,7 +46,8 @@
         android:id="@+id/addBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Student"/>
+        android:text="Add Student"
+        android:onClick="addUser"/>
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->

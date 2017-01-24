@@ -24,6 +24,7 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
     private EditText lName;
     private DatabaseReference mDatabase;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,9 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
         mScan = (Button)findViewById(R.id.scanBtn);
         mAdd = (Button)findViewById(R.id.addBtn);
         mScan.setOnClickListener(this);
+        mID = (EditText)findViewById(R.id.idIn);
+        fName = (EditText)findViewById(R.id.fNameIn);
+        lName = (EditText)findViewById(R.id.lNameIn);
     }
 
     public void onClick(View v){
@@ -47,12 +51,23 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(scanningResult != null) {
             String scanContent = scanningResult.getContents().toString();
-
+            mID.setText(scanContent);
         }else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
 
         }
+    }
+
+    public void addStudent(int uID, String firstName, String lastName){
+        String id = Integer.toString(uID);
+        Student user = new Student(uID, firstName, lastName, true);
+
+        mDatabase.child("students").child(id).setValue(user);
+    }
+
+    public void addUser(View view){
+        addStudent(mID.getText().toString(), fName.getText().toString(), lName.getText().toString());
     }
 }
