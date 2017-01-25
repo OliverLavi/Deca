@@ -27,7 +27,8 @@
         android:id="@+id/idIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ID" />
+        android:hint="ID"
+        android:inputType="number"/>
     <!--<EditText-->
         <!--android:id="@+id/fNameIn"-->
         <!--android:layout_width="match_parent"-->

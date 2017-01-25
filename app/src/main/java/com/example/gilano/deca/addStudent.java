@@ -68,6 +68,7 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
     }
 
     public void addUser(View view){
-        addStudent(mID.getText().toString(), fName.getText().toString(), lName.getText().toString());
+        int x = Integer.parseInt(mID.getText().toString());
+        addStudent(x, fName.getText().toString(), lName.getText().toString());
     }
 }

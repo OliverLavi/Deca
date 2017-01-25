@@ -25,7 +25,7 @@ public class barscan extends AppCompatActivity implements OnClickListener{
     private TextView mResultNote;
     private EditText fName;
     private EditText lName;
-    private EditText manId;
+    private EditText inputID;
     private DatabaseReference mDatabase;
     private String id;
 
@@ -39,7 +39,7 @@ public class barscan extends AppCompatActivity implements OnClickListener{
         mCheckIn = (Button)findViewById(R.id.chkInBtn);
         mCheckOut = (Button)findViewById(R.id.chkOutBtn);
         mResultNote = (TextView)findViewById(R.id.textResult);
-        manId = (EditText)findViewById(R.id.idIn);
+        inputID = (EditText)findViewById(R.id.idIn);
         mScan.setOnClickListener(this);
 
     }
@@ -56,7 +56,7 @@ public class barscan extends AppCompatActivity implements OnClickListener{
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(scanningResult != null) {
             String scanContent = scanningResult.getContents().toString();
-            manId.setText(scanContent);
+            inputID.setText(scanContent);
 
         }else {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -66,10 +66,13 @@ public class barscan extends AppCompatActivity implements OnClickListener{
         }
     }
 
-    public void changeStatus(int uID){
-
-    }
     public void checkIn(View view){
-        mDatabase.child("users").child(id).child("status").setValue(true);
+        id = inputID.getText().toString();
+        mDatabase.child("students").child(id).child("status").setValue(true);
+    }
+
+    public void checkOut(View view) {
+        id = inputID.getText().toString();
+        mDatabase.child("students").child(id).child("status").setValue(false);
     }
 }
