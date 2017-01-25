@@ -13,28 +13,40 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class allStudents extends AppCompatActivity {
 
-    private Button mBackbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_students);
 
-        mBackbtn = (Button) findViewById(R.id.backButton);
-        mBackbtn.setOnClickListener(new View.OnClickListener() {
+        final List<Student> completeList = new ArrayList<Student>();
+
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+        mRef.child("students").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(allStudents.this, MainActivity.class);
-                startActivity(intent);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> students = dataSnapshot.getChildren();
+
+                for (DataSnapshot child: students) {
+                    Student student = child.getValue(Student.class);
+                    completeList.add(student);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
-
+        //ArrayAdapter<Student> listAdapter = new ArrayAdapter<Student>(getActivity(), android.R.layout.simple_list_item_2, completeList);
 
     }
 }
