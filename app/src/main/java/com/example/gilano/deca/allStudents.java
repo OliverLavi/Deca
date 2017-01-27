@@ -20,6 +20,7 @@ import java.util.List;
 
 public class allStudents extends AppCompatActivity {
 
+    private ListView mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class allStudents extends AppCompatActivity {
         setContentView(R.layout.activity_all_students);
 
         final List<Student> completeList = new ArrayList<Student>();
+        mList = (ListView)findViewById(R.id.listAllStudents);
 
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
         mRef.child("students").addValueEventListener(new ValueEventListener() {
@@ -46,7 +48,8 @@ public class allStudents extends AppCompatActivity {
             }
         });
 
-        //ArrayAdapter<Student> listAdapter = new ArrayAdapter<Student>(getActivity(), android.R.layout.simple_list_item_2, completeList);
+        ArrayAdapter<Student> listAdapter = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_2, completeList);
+        mList.setAdapter(listAdapter);
 
     }
 }
