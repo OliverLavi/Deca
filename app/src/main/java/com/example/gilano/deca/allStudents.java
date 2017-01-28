@@ -48,7 +48,7 @@ public class allStudents extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<Student> listAdapter = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_2, completeList);
+        StudentAdapter listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);
         mList.setAdapter(listAdapter);
 
     }

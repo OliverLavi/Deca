@@ -21,7 +21,7 @@ public class StudentAdapter extends ArrayAdapter<Student>{
     int layoutResourceId;
     ArrayList<Student> data = null;
 
-    public StudentAdapter(Context context, int layoutResourceId,ArrayList<Student> data){
+    public StudentAdapter(Context context, int layoutResourceId, ArrayList<Student> data){
         super(context, layoutResourceId, data);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
@@ -46,7 +46,7 @@ public class StudentAdapter extends ArrayAdapter<Student>{
         }
         else
         {
-            holder = (WeatherHolder)row.getTag();
+            holder = (StudentHolder)row.getTag();
         }
 
         Student student = data.get(position);
