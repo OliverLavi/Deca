@@ -49,7 +49,7 @@ public class StudentAdapter extends ArrayAdapter<Student>{
             holder = (StudentHolder)row.getTag();
         }
 
-        Student student = data.get(position);
+        Student student = getItem(position);
         //Weather weather = data[position];
         holder.name.setText(student.getName());
         if(student.getStatus() == true){

@@ -27,7 +27,7 @@ public class allStudents extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_students);
 
-        final List<Student> completeList = new ArrayList<Student>();
+        final ArrayList<Student> completeList = new ArrayList<Student>();
         mList = (ListView)findViewById(R.id.listAllStudents);
 
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
