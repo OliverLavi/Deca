@@ -49,6 +49,8 @@ public class allStudents extends AppCompatActivity {
             }
         });
 
+
+
         StudentAdapter listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);
         mList.setAdapter(listAdapter);
 
