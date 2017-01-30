@@ -39,6 +39,7 @@ public class allStudents extends AppCompatActivity {
                 for (DataSnapshot child: students) {
                     Student student = child.getValue(Student.class);
                     completeList.add(student);
+                    System.out.println(completeList.size());
                 }
             }
 

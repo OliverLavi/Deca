@@ -14,24 +14,24 @@ import java.util.ArrayList;
 
 public class Student {
     private int id;
-    private String fName;
-    private String lName;
+    private String FirstName;
+    private String LastName;
     private boolean status;
     private String name;
 
     public Student(){
         id = 0;
-        fName = "failed";
-        lName = "failed";
+        FirstName = "failed";
+        LastName = "failed";
         status = false;
     }
 
     public Student(int idIn, String firstName, String lastName, boolean createStatus){
         id = idIn;
-        fName = firstName;
-        lName = lastName;
+        FirstName = firstName;
+        LastName = lastName;
         status = createStatus;
-        name = fName + " " + lName;
+        name = FirstName.toUpperCase() + " " + LastName.toUpperCase();
     }
 
     public Student(JSONObject object){
@@ -53,11 +53,11 @@ public class Student {
     }
 
     public String getFirstName(){
-        return fName;
+        return FirstName;
     }
 
     public String getLastName(){
-        return lName;
+        return LastName;
     }
 
     public boolean getStatus(){
