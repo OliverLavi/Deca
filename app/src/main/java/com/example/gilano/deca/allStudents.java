@@ -3,6 +3,7 @@ package com.example.gilano.deca;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,15 +32,29 @@ public class allStudents extends AppCompatActivity {
         mList = (ListView)findViewById(R.id.listAllStudents);
 
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+//        mRef.child("students").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Iterable<DataSnapshot> students = dataSnapshot.getChildren();
+//
+//                for (DataSnapshot child: students) {
+//                    Student student = child.getValue(Student.class);
+//                    completeList.add(student);
+//                    System.out.println(completeList.size());
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
         mRef.child("students").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> students = dataSnapshot.getChildren();
-
-                for (DataSnapshot child: students) {
-                    Student student = child.getValue(Student.class);
+                for (DataSnapshot studentSnapshot: dataSnapshot.getChildren()){
+                    Student student = studentSnapshot.getValue(Student.class);
                     completeList.add(student);
-                    System.out.println(completeList.size());
                 }
             }
 
@@ -48,7 +63,6 @@ public class allStudents extends AppCompatActivity {
 
             }
         });
-
 
 
         StudentAdapter listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);

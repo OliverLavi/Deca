@@ -14,28 +14,30 @@ import java.util.ArrayList;
 
 public class Student {
     private int id;
-    private String FirstName;
-    private String LastName;
+    private String firstName;
+    private String lastName;
     private boolean status;
     private String name;
 
     public Student(){
         id = 0;
-        FirstName = "failed";
-        LastName = "failed";
+        firstName = "failed";
+        lastName = "failed";
         status = false;
     }
 
     public Student(int idIn, String firstName, String lastName, boolean createStatus){
         id = idIn;
-        FirstName = firstName;
-        LastName = lastName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         status = createStatus;
-        name = FirstName.toUpperCase() + " " + LastName.toUpperCase();
+        name = this.firstName.toUpperCase() + " " + this.lastName.toUpperCase();
     }
 
     public Student(JSONObject object){
         try {
+            setFirstName(object.getString("firstName"));
+            setLastName(object.getString("lastName"));
             this.name = object.getString("name");
             this.status = object.getBoolean("status");
             this.id = object.getInt("id");
@@ -44,22 +46,30 @@ public class Student {
         }
     }
 
+    public void setId(int id){
+        this.id = id;
+    }
     public int getId(){
         return id;
     }
-
     public String getName(){
         return name;
     }
-
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
+    }
     public String getFirstName(){
-        return FirstName;
+        return firstName;
     }
-
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
     public String getLastName(){
-        return LastName;
+        return lastName;
     }
-
+    public void setStatus(boolean status){
+        this.status = status;
+    }
     public boolean getStatus(){
         return status;
     }
