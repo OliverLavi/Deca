@@ -22,40 +22,39 @@ import java.util.List;
 public class allStudents extends AppCompatActivity {
 
     private ListView mList;
+    private int counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_students);
 
-        final ArrayList<Student> completeList = new ArrayList<Student>();
         mList = (ListView)findViewById(R.id.listAllStudents);
+        final ArrayList<Student> completeList = new ArrayList<Student>();
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("students");
 
-        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
-//        mRef.child("students").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Iterable<DataSnapshot> students = dataSnapshot.getChildren();
-//
-//                for (DataSnapshot child: students) {
-//                    Student student = child.getValue(Student.class);
-//                    completeList.add(student);
-//                    System.out.println(completeList.size());
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-        mRef.child("students").addValueEventListener(new ValueEventListener() {
+        mRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot studentSnapshot: dataSnapshot.getChildren()){
-                    Student student = studentSnapshot.getValue(Student.class);
-                    completeList.add(student);
-                }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Student student = dataSnapshot.getValue(Student.class);
+                completeList.add(student);
+                counter++;
+                System.out.println(student);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override
@@ -63,8 +62,6 @@ public class allStudents extends AppCompatActivity {
 
             }
         });
-
-
         StudentAdapter listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);
         mList.setAdapter(listAdapter);
 
