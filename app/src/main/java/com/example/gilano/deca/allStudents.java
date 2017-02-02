@@ -23,14 +23,15 @@ public class allStudents extends AppCompatActivity {
 
     private ListView mList;
     private int counter;
-
+    private ArrayList<Student> completeList = new ArrayList<Student>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_students);
 
         mList = (ListView)findViewById(R.id.listAllStudents);
-        final ArrayList<Student> completeList = new ArrayList<Student>();
+        //final ArrayList<Student> completeList = new ArrayList<Student>();
+        completeList.add(new Student());
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("students");
 
         mRef.addChildEventListener(new ChildEventListener() {
@@ -39,7 +40,7 @@ public class allStudents extends AppCompatActivity {
                 Student student = dataSnapshot.getValue(Student.class);
                 completeList.add(student);
                 counter++;
-                System.out.println(student);
+                System.out.println("Students: " + student);
             }
 
             @Override
@@ -62,6 +63,9 @@ public class allStudents extends AppCompatActivity {
 
             }
         });
+        for(Student s: completeList){
+            System.out.println("Student name: " + s.getName());
+        }
         StudentAdapter listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);
         mList.setAdapter(listAdapter);
 
