@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class allStudents extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class allStudents extends AppCompatActivity {
 
         mList = (ListView)findViewById(R.id.listAllStudents);
         //final ArrayList<Student> completeList = new ArrayList<Student>();
-        completeList.add(new Student());
+        completeList.add(new Student(0000, "Student","Test", true));
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("students");
 
         mRef.addChildEventListener(new ChildEventListener() {
@@ -40,22 +41,25 @@ public class allStudents extends AppCompatActivity {
                 Student student = dataSnapshot.getValue(Student.class);
                 completeList.add(student);
                 counter++;
-                System.out.println("Students: " + student);
+                System.out.println("Students: " + student.getName());
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                Student student = dataSnapshot.getValue(Student.class);
+                completeList.add(student);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                Student student = dataSnapshot.getValue(Student.class);
+                completeList.add(student);
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                Student student = dataSnapshot.getValue(Student.class);
+                completeList.add(student);
             }
 
             @Override
@@ -66,7 +70,14 @@ public class allStudents extends AppCompatActivity {
         for(Student s: completeList){
             System.out.println("Student name: " + s.getName());
         }
+        System.out.println(counter);
         StudentAdapter listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);
+        listAdapter.sort(new Comparator<Student>() {
+            @Override
+            public int compare(Student student, Student t1) {
+                return student.getName().compareTo(t1.getName());
+            }
+        });
         mList.setAdapter(listAdapter);
 
     }

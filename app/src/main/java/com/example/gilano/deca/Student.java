@@ -31,7 +31,7 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         status = createStatus;
-        name = this.firstName.toUpperCase() + " " + this.lastName.toUpperCase();
+        name = this.lastName.toUpperCase() + ", " + this.firstName.toUpperCase();
     }
 
     public Student(JSONObject object){
