@@ -32,7 +32,7 @@ public class allStudents extends AppCompatActivity {
 
         mList = (ListView)findViewById(R.id.listAllStudents);
         //final ArrayList<Student> completeList = new ArrayList<Student>();
-        completeList.add(new Student(0000, "Student","Test", true));
+        //completeList.add(new Student(0000, "Student","Test", true));
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("students");
 
         mRef.addChildEventListener(new ChildEventListener() {

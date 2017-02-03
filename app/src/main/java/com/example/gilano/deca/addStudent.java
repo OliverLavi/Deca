@@ -1,5 +1,6 @@
 package com.example.gilano.deca;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -70,5 +71,14 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
     public void addUser(View view){
         int x = Integer.parseInt(mID.getText().toString());
         addStudent(x, fName.getText().toString(), lName.getText().toString());
+        Context context = getApplicationContext();
+        CharSequence text = "Student Added";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+        mID.setText("");
+        fName.setText("");
+        lName.setText("");
     }
 }
