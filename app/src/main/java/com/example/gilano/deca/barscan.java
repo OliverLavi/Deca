@@ -68,26 +68,34 @@ public class barscan extends AppCompatActivity implements OnClickListener{
     }
 
     public void checkIn(View view){
-        id = inputID.getText().toString();
-        mDatabase.child("students").child(id).child("status").setValue(true);
-        inputID.setText("");
-        Context context = getApplicationContext();
-        CharSequence text = "Checked In";
-        int duration = Toast.LENGTH_SHORT;
+            id = inputID.getText().toString();
+            if(id.matches("")){
+                Toast.makeText(this, "You did not enter an ID", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mDatabase.child("students").child(id).child("status").setValue(true);
+            inputID.setText("");
+            Context context = getApplicationContext();
+            CharSequence text = "Checked In";
+            int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
     }
 
     public void checkOut(View view) {
-        id = inputID.getText().toString();
-        mDatabase.child("students").child(id).child("status").setValue(false);
-        inputID.setText("");
-        Context context = getApplicationContext();
-        CharSequence text = "Checked Out";
-        int duration = Toast.LENGTH_SHORT;
+            id = inputID.getText().toString();
+            if(id.matches("")){
+                Toast.makeText(this, "You did not enter an ID", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            mDatabase.child("students").child(id).child("status").setValue(false);
+            inputID.setText("");
+            Context context = getApplicationContext();
+            CharSequence text = "Checked Out";
+            int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
     }
 }
