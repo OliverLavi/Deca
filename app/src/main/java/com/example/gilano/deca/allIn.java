@@ -42,7 +42,7 @@ public class allIn extends AppCompatActivity {
                     }
                     String id = child.child("id").getValue().toString();
 
-                    Student student = new Student(Integer.parseInt(id), firstName, lastName, stat);
+                    Student student = new Student(id, firstName, lastName, stat);
                     if(stat == true){
                         studentsIn.add(student);
                     }

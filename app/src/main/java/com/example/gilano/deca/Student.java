@@ -13,20 +13,20 @@ import java.util.ArrayList;
  */
 
 public class Student {
-    private int id;
+    private String id;
     private String firstName;
     private String lastName;
     private boolean status;
     private String name;
 
     public Student(){
-        id = 0;
+        id = "0000";
         firstName = "failed";
         lastName = "failed";
         status = false;
     }
 
-    public Student(int idIn, String firstName, String lastName, boolean createStatus){
+    public Student(String idIn, String firstName, String lastName, boolean createStatus){
         id = idIn;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -40,16 +40,16 @@ public class Student {
             setLastName(object.getString("lastName"));
             this.name = object.getString("name");
             this.status = object.getBoolean("status");
-            this.id = object.getInt("id");
+            this.id = object.getString("id");
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void setId(int id){
+    public void setId(String id){
         this.id = id;
     }
-    public int getId(){
+    public String getId(){
         return id;
     }
     public String getName(){

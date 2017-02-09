@@ -62,8 +62,8 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
     }
 
     public void addStudent(String uID, String firstName, String lastName){
-        int id = Integer.parseInt(uID);
-        Student user = new Student(id, firstName, lastName, true);
+        //int id = Integer.parseInt(uID);
+        Student user = new Student(uID, firstName, lastName, true);
 
         mDatabase.child("students").child(uID).setValue(user);
     }
