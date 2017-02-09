@@ -1,6 +1,8 @@
 package com.example.gilano.deca;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -29,6 +31,7 @@ public class barscan extends AppCompatActivity implements OnClickListener{
     private EditText inputID;
     private DatabaseReference mDatabase;
     private String id;
+    private Button mClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class barscan extends AppCompatActivity implements OnClickListener{
         mResultNote = (TextView)findViewById(R.id.textResult);
         inputID = (EditText)findViewById(R.id.idIn);
         mScan.setOnClickListener(this);
+        mClear = (Button)findViewById(R.id.clearBtn);
 
     }
 
@@ -97,5 +101,31 @@ public class barscan extends AppCompatActivity implements OnClickListener{
 
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
+    }
+
+    public void clearData(){
+        mDatabase.child("students").removeValue();
+        Toast.makeText(this, "Trip Cleared", Toast.LENGTH_SHORT).show();
+    }
+
+    public void cheese(View view){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setMessage("This will delete all the students from the list! Are you sure?")
+                .setPositiveButton("I understand, continue", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        clearData();
+                        dialogInterface.cancel();
+
+                    }
+                })
+                .setNegativeButton("Nevermind", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                })
+                .create();
+        alert.show();
     }
 }

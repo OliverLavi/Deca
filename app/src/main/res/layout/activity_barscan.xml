@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.gilano.deca.barscan">
+    tools:context="com.example.gilano.deca.barscan"
+    >
 
     <Button
         android:id="@+id/scanBtn"
@@ -42,7 +43,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
             android:id="@+id/chkInBtn"
@@ -58,6 +59,17 @@
             android:layout_weight="1"
             android:text="Check Out"
             android:onClick="checkOut"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+        <Button android:id="@+id/clearBtn"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Clear Trip"
+            android:onClick="cheese"/>
     </LinearLayout>
 
     <TextView
