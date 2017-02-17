@@ -17,14 +17,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class allStudents extends AppCompatActivity {
 
     private ListView mList;
-    private int counter;
     private ArrayList<Student> completeList = new ArrayList<Student>();
+    private StudentAdapter listAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,13 +37,13 @@ public class allStudents extends AppCompatActivity {
         //completeList.add(new Student(0000, "Student","Test", true));
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("students");
 
-        mRef.addChildEventListener(new ChildEventListener() {
+        mRef.orderByChild("name").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Student student = dataSnapshot.getValue(Student.class);
                 completeList.add(student);
-                counter++;
                 System.out.println("Students: " + student.getName());
+                listAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -70,14 +72,13 @@ public class allStudents extends AppCompatActivity {
         for(Student s: completeList){
             System.out.println("Student name: " + s.getName());
         }
-        System.out.println(counter);
-        StudentAdapter listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);
-        listAdapter.sort(new Comparator<Student>() {
+        Collections.sort(completeList, new Comparator<Student>() {
             @Override
             public int compare(Student student, Student t1) {
                 return student.getName().compareTo(t1.getName());
             }
         });
+        listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);
         mList.setAdapter(listAdapter);
 
     }

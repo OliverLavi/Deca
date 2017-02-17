@@ -6,8 +6,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import android.os.Bundle;
@@ -20,13 +23,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class barscan extends AppCompatActivity implements OnClickListener{
 
     private Button mScan;
     private Button mCheckIn;
     private Button mCheckOut;
     private TextView mResultNote;
-    private EditText fName;
+    private ArrayList<Student> currentStudents;
     private EditText lName;
     private EditText inputID;
     private DatabaseReference mDatabase;
@@ -46,6 +52,31 @@ public class barscan extends AppCompatActivity implements OnClickListener{
         inputID = (EditText)findViewById(R.id.idIn);
         mScan.setOnClickListener(this);
         mClear = (Button)findViewById(R.id.clearBtn);
+        currentStudents = new ArrayList<Student>();
+
+        mDatabase.child("students").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child: dataSnapshot.getChildren()){
+                    String name = child.child("name").getValue().toString();
+                    String firstName = child.child("firstName").getValue().toString();
+                    String lastName = child.child("lastName").getValue().toString();
+                    String status = child.child("status").getValue().toString();
+                    boolean stat = true;
+                    if(status == "false"){
+                        stat = false;
+                    }
+                    String id = child.child("id").getValue().toString();
+
+                    Student student = new Student(id, firstName, lastName, stat);
+                    currentStudents.add(student);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -73,8 +104,14 @@ public class barscan extends AppCompatActivity implements OnClickListener{
 
     public void checkIn(View view){
             id = inputID.getText().toString();
-            if(id.matches("")){
-                Toast.makeText(this, "You did not enter an ID", Toast.LENGTH_SHORT).show();
+            boolean exists = false;
+            for(Student s: currentStudents){
+                if(id.equals(s.getId().toString())){
+                    exists = true;
+                }
+            }
+            if(id.matches("") || exists == false){
+                Toast.makeText(this, "You did not enter a valid ID", Toast.LENGTH_SHORT).show();
                 return;
             }
             mDatabase.child("students").child(id).child("status").setValue(true);
@@ -89,8 +126,14 @@ public class barscan extends AppCompatActivity implements OnClickListener{
 
     public void checkOut(View view) {
             id = inputID.getText().toString();
-            if(id.matches("")){
-                Toast.makeText(this, "You did not enter an ID", Toast.LENGTH_SHORT).show();
+            boolean exists = false;
+            for(Student s: currentStudents){
+                if(id.equals(s.getId().toString())){
+                    exists = true;
+                }
+            }
+            if(id.matches("") || exists == false){
+                Toast.makeText(this, "You did not enter a valid ID", Toast.LENGTH_SHORT).show();
                 return;
             }
             mDatabase.child("students").child(id).child("status").setValue(false);

@@ -27,7 +27,7 @@ public class allIn extends AppCompatActivity {
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("students");
         displayList = (ListView)findViewById(R.id.allInList);
 
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.orderByChild("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 

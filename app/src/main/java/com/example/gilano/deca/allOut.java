@@ -1,5 +1,6 @@
 package com.example.gilano.deca;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.view.View.OnClickListener;
 
 import java.util.ArrayList;
 
@@ -33,7 +35,7 @@ public class allOut extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference("students");
         displayList = (ListView)findViewById(R.id.allOutList);
 
-        mRef.addValueEventListener(new ValueEventListener() {
+        mRef.orderByChild("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -52,9 +54,7 @@ public class allOut extends AppCompatActivity {
                     if(stat == false){
                         studentsIn.add(student);
                     }
-
                 }
-
             }
 
             @Override
@@ -65,63 +65,40 @@ public class allOut extends AppCompatActivity {
 
         listAdapter = new StudentAdapter(this, R.layout.listview_item_row, studentsIn);
         displayList.setAdapter(listAdapter);
+        //listAdapter.notifyDataSetChanged();
 
 //        displayList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //            @Override
 //            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                showAlert(i);
-//                return true;
+//                    String id = studentsIn.get(i).getId();
+//                    mRef.child(id).child("status").setValue(true);
+//                    studentsIn.get(i).setStatus(true);
+//                    listAdapter.notifyDataSetChanged();
+//                    //clickIn(i);
+//                return false;
 //            }
 //        });
     }
 
-    public void checkIn(int position){
-        Student student = (Student)displayList.getItemAtPosition(position);
-        final int pos = position;
-        student.setStatus(true);
-        String node = student.getId().toString();
-        mRef.child(node).setValue(student);
-
-        new Thread() {
-            public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            studentsIn.remove(pos);
-                            listAdapter.notifyDataSetChanged();
-                        }
-                    });
-            }
-        }.start();
-        //studentsIn.remove(position);
-        //listAdapter.notifyDataSetChanged();
-
-    }
-    public void showAlert(int position){
-        final int cheese = position;
-        Student student = (Student)displayList.getItemAtPosition(position);
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setMessage("Check in " + student.getName() + "?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        checkIn(cheese);
-
-                        dialogInterface.cancel();
-                        showToast();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                })
-                .create();
-        alert.show();
-    }
-
-    public void showToast(){
-        Toast.makeText(this, "Checked In", Toast.LENGTH_SHORT).show();
-    }
+//    public void clickIn(int pos){
+//        String name = studentsIn.get(pos).getName();
+//        final String id = studentsIn.get(pos).getId();
+//        AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
+//        alert.setMessage("Check In " + name + "?")
+//                .setPositiveButton("Check In", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        mRef.child("students").child(id).child("status").setValue(true);
+//
+//                    }
+//                })
+//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                })
+//                .create();
+//        alert.show();
+//    }
 }

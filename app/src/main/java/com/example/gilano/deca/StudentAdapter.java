@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ public class StudentAdapter extends ArrayAdapter<Student>{
 
     Context context;
     int layoutResourceId;
-    ArrayList<Student> data = null;
+    ArrayList<Student> data;
 
     public StudentAdapter(Context context, int layoutResourceId, ArrayList<Student> data){
         super(context, layoutResourceId, data);
@@ -29,7 +30,7 @@ public class StudentAdapter extends ArrayAdapter<Student>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent){
         View row = convertView;
         StudentHolder holder = null;
 
@@ -50,7 +51,6 @@ public class StudentAdapter extends ArrayAdapter<Student>{
         }
 
         Student student = getItem(position);
-        //Weather weather = data[position];
         holder.name.setText(student.getName());
         if(student.getStatus() == true){
             holder.status.setText("Checked In");
@@ -66,4 +66,6 @@ public class StudentAdapter extends ArrayAdapter<Student>{
         TextView name;
         TextView status;
     }
+
+
 }
