@@ -31,7 +31,9 @@ public class allOut extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_out);
 
+        //Initiate ArrayList
         studentsIn = new ArrayList<Student>();
+        //Get firebase instance
         mRef = FirebaseDatabase.getInstance().getReference("students");
         displayList = (ListView)findViewById(R.id.allOutList);
 
@@ -40,6 +42,7 @@ public class allOut extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot child: dataSnapshot.getChildren() ){
+                    //Get data from each node
                     String name = child.child("name").getValue().toString();
                     String firstName = child.child("firstName").getValue().toString();
                     String lastName = child.child("lastName").getValue().toString();
@@ -49,56 +52,24 @@ public class allOut extends AppCompatActivity {
                         stat = false;
                     }
                     String id = child.child("id").getValue().toString();
-
+                    //Create Student object from data
                     Student student = new Student(id, firstName, lastName, stat);
+
+                    //Populate ArrayList with students checked out
                     if(stat == false){
                         studentsIn.add(student);
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getMessage());
             }
         });
 
+        //Create adapter
         listAdapter = new StudentAdapter(this, R.layout.listview_item_row, studentsIn);
+        //Set adapter
         displayList.setAdapter(listAdapter);
-        //listAdapter.notifyDataSetChanged();
-
-//        displayList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                    String id = studentsIn.get(i).getId();
-//                    mRef.child(id).child("status").setValue(true);
-//                    studentsIn.get(i).setStatus(true);
-//                    listAdapter.notifyDataSetChanged();
-//                    //clickIn(i);
-//                return false;
-//            }
-//        });
     }
-
-//    public void clickIn(int pos){
-//        String name = studentsIn.get(pos).getName();
-//        final String id = studentsIn.get(pos).getId();
-//        AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
-//        alert.setMessage("Check In " + name + "?")
-//                .setPositiveButton("Check In", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        mRef.child("students").child(id).child("status").setValue(true);
-//
-//                    }
-//                })
-//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                })
-//                .create();
-//        alert.show();
-//    }
 }

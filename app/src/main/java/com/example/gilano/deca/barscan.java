@@ -54,6 +54,7 @@ public class barscan extends AppCompatActivity implements OnClickListener{
         mClear = (Button)findViewById(R.id.clearBtn);
         currentStudents = new ArrayList<Student>();
 
+        //Get all students to cross reference
         mDatabase.child("students").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -79,7 +80,7 @@ public class barscan extends AppCompatActivity implements OnClickListener{
         });
 
     }
-
+    //Start Scanning app
     public void onClick(View v){
         if(v.getId()==R.id.scanBtn){
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
@@ -87,7 +88,7 @@ public class barscan extends AppCompatActivity implements OnClickListener{
         }
 
     }
-
+    //Populate ID field with scan info
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(scanningResult != null) {
@@ -101,9 +102,10 @@ public class barscan extends AppCompatActivity implements OnClickListener{
 
         }
     }
-
+    //Check in student
     public void checkIn(View view){
             id = inputID.getText().toString();
+            //Check if student exists in database
             boolean exists = false;
             for(Student s: currentStudents){
                 if(id.equals(s.getId().toString())){
@@ -114,18 +116,21 @@ public class barscan extends AppCompatActivity implements OnClickListener{
                 Toast.makeText(this, "You did not enter a valid ID", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            //Check student in
             mDatabase.child("students").child(id).child("status").setValue(true);
             inputID.setText("");
+
             Context context = getApplicationContext();
             CharSequence text = "Checked In";
             int duration = Toast.LENGTH_SHORT;
-
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
     }
 
     public void checkOut(View view) {
             id = inputID.getText().toString();
+            //Check if student is in database
             boolean exists = false;
             for(Student s: currentStudents){
                 if(id.equals(s.getId().toString())){
@@ -136,21 +141,23 @@ public class barscan extends AppCompatActivity implements OnClickListener{
                 Toast.makeText(this, "You did not enter a valid ID", Toast.LENGTH_SHORT).show();
                 return;
             }
+            //Checkout
             mDatabase.child("students").child(id).child("status").setValue(false);
             inputID.setText("");
+
             Context context = getApplicationContext();
             CharSequence text = "Checked Out";
             int duration = Toast.LENGTH_SHORT;
-
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
     }
-
+    //Clear all students from database
     public void clearData(){
         mDatabase.child("students").removeValue();
         Toast.makeText(this, "Trip Cleared", Toast.LENGTH_SHORT).show();
     }
 
+    //Clear Trip warning
     public void cheese(View view){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setMessage("This will delete all the students from the list! Are you sure?")

@@ -19,6 +19,7 @@ public class Student {
     private boolean status;
     private String name;
 
+    //Default constructor
     public Student(){
         id = "0000";
         firstName = "failed";
@@ -26,6 +27,7 @@ public class Student {
         status = false;
     }
 
+    //Primary constructor
     public Student(String idIn, String firstName, String lastName, boolean createStatus){
         id = idIn;
         this.firstName = firstName;
@@ -34,6 +36,7 @@ public class Student {
         name = this.lastName.toUpperCase() + ", " + this.firstName.toUpperCase();
     }
 
+    //JSON constructor
     public Student(JSONObject object){
         try {
             setFirstName(object.getString("firstName"));
@@ -46,6 +49,7 @@ public class Student {
         }
     }
 
+    //Getters and setters
     public void setId(String id){
         this.id = id;
     }
@@ -77,6 +81,9 @@ public class Student {
         return status;
     }
 
+    /*
+     * Populates ArrayList with student objects from JSONArray
+     */
     public static ArrayList<Student> fromJson(JSONArray jsonObjects){
         ArrayList<Student> students = new ArrayList<Student>();
         for(int i = 0; i < jsonObjects.length(); i++) {

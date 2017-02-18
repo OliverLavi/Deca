@@ -24,7 +24,7 @@ import java.util.List;
 public class allStudents extends AppCompatActivity {
 
     private ListView mList;
-    private ArrayList<Student> completeList = new ArrayList<Student>();
+    private ArrayList<Student> completeList;
     private StudentAdapter listAdapter;
 
     @Override
@@ -33,16 +33,22 @@ public class allStudents extends AppCompatActivity {
         setContentView(R.layout.activity_all_students);
 
         mList = (ListView)findViewById(R.id.listAllStudents);
-        //final ArrayList<Student> completeList = new ArrayList<Student>();
-        //completeList.add(new Student(0000, "Student","Test", true));
+
+        //Initialize ArrayList
+        completeList = new ArrayList<Student>();
+
+        //Get Instance of database
         DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("students");
+
 
         mRef.orderByChild("name").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //Convert Firebase nodes to Student objects
                 Student student = dataSnapshot.getValue(Student.class);
+                //Add new Student objects to ArrayList
                 completeList.add(student);
-                System.out.println("Students: " + student.getName());
+                //Displays Student object in ListView
                 listAdapter.notifyDataSetChanged();
             }
 
@@ -55,13 +61,12 @@ public class allStudents extends AppCompatActivity {
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 Student student = dataSnapshot.getValue(Student.class);
-                completeList.add(student);
+                completeList.remove(student);
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                Student student = dataSnapshot.getValue(Student.class);
-                completeList.add(student);
+
             }
 
             @Override
@@ -69,16 +74,20 @@ public class allStudents extends AppCompatActivity {
 
             }
         });
-        for(Student s: completeList){
-            System.out.println("Student name: " + s.getName());
-        }
-        Collections.sort(completeList, new Comparator<Student>() {
-            @Override
-            public int compare(Student student, Student t1) {
-                return student.getName().compareTo(t1.getName());
-            }
-        });
+
+//        for(Student s: completeList){
+//            System.out.println("Student name: " + s.getName());
+//        }
+//        Collections.sort(completeList, new Comparator<Student>() {
+//            @Override
+//            public int compare(Student student, Student t1) {
+//                return student.getName().compareTo(t1.getName());
+//            }
+//        });
+
+        //Create StudentAdapter
         listAdapter = new StudentAdapter(this, R.layout.listview_item_row, completeList);
+        //Set adapter to ListView
         mList.setAdapter(listAdapter);
 
     }

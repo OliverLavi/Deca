@@ -25,11 +25,12 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
     private EditText lName;
     private DatabaseReference mDatabase;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
+
+        //Firebase instance
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mScan = (Button)findViewById(R.id.scanBtn);
@@ -40,6 +41,7 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
         lName = (EditText)findViewById(R.id.lNameIn);
     }
 
+    //Open scanning app
     public void onClick(View v){
         if(v.getId()==R.id.scanBtn){
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
@@ -48,6 +50,7 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
 
     }
 
+    //Set ID field to scan result
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(scanningResult != null) {
@@ -61,22 +64,29 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
         }
     }
 
+    //Adds student to the Firebase list
     public void addStudent(String uID, String firstName, String lastName){
-        //int id = Integer.parseInt(uID);
+        //create student object
         Student user = new Student(uID, firstName, lastName, true);
-
+        //store on Firebase
         mDatabase.child("students").child(uID).setValue(user);
     }
 
+    //Respond to button click
     public void addUser(View view){
+        //Gets ID from text editor
         String x = mID.getText().toString();
+        //add the student to the firebase
         addStudent(x, fName.getText().toString(), lName.getText().toString());
+
+        //Create toast
         Context context = getApplicationContext();
         CharSequence text = "Student Added";
         int duration = Toast.LENGTH_SHORT;
-
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        //Reset text fields
         mID.setText("");
         fName.setText("");
         lName.setText("");
