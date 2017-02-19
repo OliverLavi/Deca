@@ -76,6 +76,18 @@ public class addStudent extends AppCompatActivity implements OnClickListener {
     public void addUser(View view){
         //Gets ID from text editor
         String x = mID.getText().toString();
+        String first = fName.getText().toString().trim();
+        String last = lName.getText().toString().trim();
+        if(x.trim().equals("")){
+            Toast.makeText(this, "enter and ID!", Toast.LENGTH_SHORT);
+            return;
+        }else if(first.equals("")){
+            Toast.makeText(this, "enter and ID!", Toast.LENGTH_SHORT);
+            return;
+        }else if(last.equals("")){
+            Toast.makeText(this, "enter and ID!", Toast.LENGTH_SHORT);
+            return;
+        }
         //add the student to the firebase
         addStudent(x, fName.getText().toString(), lName.getText().toString());
 
